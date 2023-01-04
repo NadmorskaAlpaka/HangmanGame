@@ -6,30 +6,39 @@ using namespace std;
 class Hangman {
 	vector<string> bankOfWords;
 	string secretWord;
-	vector<string> usedLetters{ "a", "b", "c", "d", "e", "f" };
-	int hearts = 5;
-	int randomNumber = 0;
+	vector<string> secretWordLetters;
+	vector<char> usedLetters;
+	int hearts;
+	int randomNumber;
 
 	public:
 		//gettery
-		int getHearts();
 		string getSecretWord();
+		int getHearts();
 		int getRandomNumber();
 
 		//settery
 		void setSecretWord();
 		void setHearts(int newHearts);
-		void setUssedLetters(string newUsedLetter);
+		void setUssedLetters(string userGuess);
 
 		//funkcje
-		void pickRandomNumber();
 		int readFile();
-		void showHearts();
-		void showUsedLetters();
+		void pickRandomNumber();
+		void decrementHearts();
+		void setStartSecretWordLetters();
+		bool checkUserGuessByLetter(string userGuess);
+		bool checkUserGuessByWord(string userGuess);
+		bool checkIfLetterWasUsed(string userGuess);
 
+		//funkcje informacyjne
 		void startGame();
-		void instruction();
-		void credits();
-		void showHangman(int numberOfHearts);
 		void gameOver();
+		void gameWon();
+		void showHearts();
+		void showInstruction();
+		void showCredits();
+		void showHangman(int numberOfHearts);
+		void showSecretWordLetters();
+		void showUsedLetters();
 };

@@ -14,16 +14,24 @@ string Hangman::getSecretWord() {
     return secretWord;
 }
 
+int Hangman::getHearts() {
+    return hearts;
+}
+
 // ==== SETTERY ====
 
 // funkcja dodaje zuzyta litere
-void Hangman::setUssedLetters(string newUsedLetter) {
-    usedLetters.push_back(newUsedLetter);
+void Hangman::setUssedLetters(string userGuess) {
+    usedLetters.push_back(userGuess[0]);
 }
 
 void Hangman::setSecretWord() {
     secretWord = bankOfWords[randomNumber];
 }
+
+void Hangman::setHearts(int newHearts) {
+    hearts = newHearts;
+};
 
 // ==== FUNKCJE ====
 void Hangman::pickRandomNumber() {
@@ -31,7 +39,16 @@ void Hangman::pickRandomNumber() {
     randomNumber = rand() % bankOfWords.size();
 }
 
-// funkcja odczytująca dane z pliku
+void Hangman::decrementHearts() {
+    hearts--;
+}
+
+void Hangman::setStartSecretWordLetters() {
+    for (int i = 0; i < secretWord.size(); i++) {
+        secretWordLetters.push_back("_");
+    }
+}
+
 int Hangman::readFile() {
 
     ifstream file;
@@ -50,12 +67,56 @@ int Hangman::readFile() {
     }
 
     file.close();
-    
+
     return 0;
 }
 
+bool Hangman::checkUserGuessByLetter(string userGuess) {
+    int goodGuess = 0;
+    for (int i = 0; i < secretWord.size(); i++) {
+        if (userGuess[0] == secretWord[i]) {
+            secretWordLetters[i] = userGuess[0];
+            goodGuess++;
+        }
+    }
+
+    if (goodGuess >= 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Hangman::checkUserGuessByWord(string userGuess) {
+    if (userGuess == secretWord) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Hangman::checkIfLetterWasUsed(string userGuess) {
+    for (int i = 0; i < usedLetters.size(); i++) {
+        if (userGuess[0] == usedLetters[i]) {
+            cout << "Ups, juz uzyles tej litery. Tracisz jedno zycie";
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+// ==== FUNKCJE INFORMACYJNE ====
+void Hangman::showSecretWordLetters() {
+    cout << "\n\t Haslo: ";
+    for (int i = 0; i < secretWordLetters.size(); i++) {
+        cout << secretWordLetters[i] << " ";
+    }
+    cout << "\n";
+}
+
 void Hangman::showHearts() {
-    cout << "\nPozotalo zyc: " << hearts << "\n";
+    cout << "\nPozotalo zyc: " << hearts;
 }
 
 void Hangman::showUsedLetters() {
@@ -63,12 +124,24 @@ void Hangman::showUsedLetters() {
     for (int i = 0; i < usedLetters.size(); i++) {
         cout << usedLetters[i] << " ";
     }
+    cout << "\n";
 }
 
 void Hangman::gameOver() {
-    cout << "\t------------------------------------\n"
+    system("CLS");
+    cout << "\n\t------------------------------------\n"
          << "\t|            GAME OVER             |\n"
+         << "\t|       HASLEM BYLO SLOWO:         |\n"
+         << "\t             " << secretWord << "\n"
          << "\t------------------------------------\n";
+}
+
+void Hangman::gameWon() {
+    system("CLS");
+    cout << "\n\t------------------------------------\n"
+         << "\t|             YOU WIN!              |\n"
+         << "\t------------------------------------\n"
+        << "\tHASLEM BYLO SLOWO: " << secretWord << "\n";
 }
 
 void Hangman::startGame() {
@@ -86,7 +159,8 @@ void Hangman::startGame() {
         << "\t------------------------------------\n";
 }
 
-void Hangman::credits() {
+void Hangman::showCredits() {
+    system("CLS");
     cout << "\t------------------------------------\n"
         << "\t|     PROGRAMOWANIE W JEZYKU C++    |\n"
         << "\t|       Temat: Gra Wisielec         |\n"
@@ -95,7 +169,8 @@ void Hangman::credits() {
         << "\t------------------------------------\n";
 }
 
-void Hangman::instruction() {
+void Hangman::showInstruction() {
+    system("CLS");
     cout << "\t------------------------------------\n"
         << "\t|          Instrukcja gry           |\n"
         << "\t------------------------------------\n";
