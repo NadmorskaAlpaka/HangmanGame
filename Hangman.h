@@ -4,35 +4,41 @@
 using namespace std;
 
 class Hangman {
-	vector<string> bankOfWords;
+
 	string secretWord;
+	vector<string> bankOfWords;
 	vector<string> secretWordLetters;
 	vector<char> usedLetters;
-	int hearts;
-	int randomNumber;
+	int randomNumber = 0;
+	int hearts = 0; 
+	bool developerMode = false;
 
 	public:
-		//gettery
+		// ==== GETTERY ====
 		string getSecretWord();
-		int getHearts();
 		int getRandomNumber();
+		int getHearts();
+		bool getDeveloperMode();
 
-		//settery
+		// ==== SETTERY ====
 		void setSecretWord();
-		void setHearts(int newHearts);
 		void setUssedLetters(string userGuess);
+		void setDeveloperMode(bool newDeveloperMode);
+		void setHearts(int newHearts);
 
-		//funkcje
-		int readFile();
+		// ==== FUNKCJE ====
+		void menu(int userChoice);
 		void pickRandomNumber();
+		void setWordLetterAsUnderscore();
 		void decrementHearts();
-		void setStartSecretWordLetters();
-		bool checkUserGuessByLetter(string userGuess);
+		void checkIfLetterWasUsed(string userGuess, int letterIsInWord);
+		int readFile();
+		int checkUserGuessByLetter(string userGuess);
 		bool checkUserGuessByWord(string userGuess);
-		bool checkIfLetterWasUsed(string userGuess);
+		bool checkIfUserWon();
 
-		//funkcje informacyjne
-		void startGame();
+		// ==== FUNKCJE INFORMACYJNE ====
+		void showMenu();
 		void gameOver();
 		void gameWon();
 		void showHearts();
@@ -41,4 +47,6 @@ class Hangman {
 		void showHangman(int numberOfHearts);
 		void showSecretWordLetters();
 		void showUsedLetters();
+		void showDeveloperMode();
+		void clearScreen();
 };

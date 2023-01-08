@@ -1,79 +1,65 @@
 #include "Hangman.h"
+#include "user.h"
 #include <fstream>
 #include <iostream>
 
 int main() {
 
 	Hangman game;
+	User user;
 
-	int userChoice = 0;
-	string userGuess = "";
-
-	while (userChoice != 1) {
-		game.startGame();
-		cout << "Wybierz opcje: ";
-		cin >> userChoice;
-
-		switch (userChoice) {
-		case 1:
-			break;
-		case 2:
-			game.showInstruction();
-			break;
-		case 3:
-			game.showCredits();
-			break;
-		case 4:
-			return 0;
-		default: 
-			cout << "Ups, w menu nie znjajduje sie podana pozycja. \n Wybierz inna opcje";
-		}
+	while (user.getUserChoice() != 1 && user.getUserChoice() != 5) {
+		game.showMenu();
+		user.selectOptionInMenu();
+		game.menu(user.getUserChoice());
 	}
 
-	system("CLS");
 	game.readFile();
 	game.pickRandomNumber();
 	game.setSecretWord();
 	game.setHearts(5);
-	game.setStartSecretWordLetters();
-	cout << game.getSecretWord() << "\n";
+	game.setWordLetterAsUnderscore();
 
-	while (game.getHearts() != 0) {
+	game.clearScreen();
+
+	while (game.getHearts() != 0 && user.getIsWinner() != true) {
+		
+		if (game.getDeveloperMode() == 1) {
+			game.showDeveloperMode();
+		}
 
 		game.showHearts();
 		game.showUsedLetters();
 		game.showHangman(game.getHearts());
 		game.showSecretWordLetters();
 
-		cout << "\nPodaj litere lub zgadnij haslo.\nTwoja odpowiedz: ";
-		cin >> userGuess;
+		user.takeUserGuess();
 
-		if (userGuess.size() > 1) {
-			if (game.checkUserGuessByWord(userGuess)) {
+		if (user.getUserGuess().size() > 1) {
+			if (game.checkUserGuessByWord(user.getUserGuess())) {
 				game.gameWon();
 				return 0;
 			} else {
-				game.gameOver();
-				game.showHangman(0);
-				return 0;
-			}
-		}
-
-		game.checkUserGuessByLetter(userGuess);
-
-		if (game.checkIfLetterWasUsed(userGuess)) {
-			game.decrementHearts();
-		} else {
-			game.setUssedLetters(userGuess);
-			if (!game.checkUserGuessByLetter(userGuess)) {
+				game.clearScreen();
 				game.decrementHearts();
+				continue;
 			}
 		}
+
+		game.clearScreen();
+
+		game.checkUserGuessByLetter(user.getUserGuess());
+		game.checkIfLetterWasUsed(user.getUserGuess(), game.checkUserGuessByLetter(user.getUserGuess()));
+
+		user.setIsWinner(game.checkIfUserWon());
 
 	}
 
-	game.gameOver();
-	game.showHangman(game.getHearts());
+	if (user.getIsWinner() == true) {
+		game.gameWon();
+	} else {
+		game.gameOver();
+	}
 
 	return 0;
 }
