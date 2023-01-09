@@ -1,4 +1,4 @@
-﻿#include "Hangman.h"
+﻿#include "hangman.h"
 #include "color.h"
 #include <iostream>
 #include <fstream>
@@ -59,7 +59,7 @@ void Hangman::menu(int userChoice) {
         setDeveloperMode(true);
         break;
     default:
-        cout << "Ups, w menu nie znjajduje sie podana pozycja. \n Wybierz inna opcje";
+        cout << dye::red("Ups, w menu nie znjajduje sie podana pozycja. \nWybierz inna opcje \n");
     }
 }
 
@@ -127,7 +127,8 @@ int Hangman::checkUserGuessByLetter(string userGuess) {
 bool Hangman::checkUserGuessByWord(string userGuess) {
     if (userGuess == secretWord) {
         return true;
-    } else {
+    }
+    else {
         return false;
     }
 }
@@ -140,7 +141,8 @@ void Hangman::checkIfLetterWasUsed(string userGuess, int letterIsInWord) {
         if (letterIsInWord <= 0) {
             decrementHearts();
         }
-    } else { //sprawdzenie czy bank słów jest pusty - nie jest
+    }
+    else { //sprawdzenie czy bank słów jest pusty - nie jest
 
         for (int i = 0; i < usedLetters.size(); i++) {
             if (userGuess[0] == usedLetters[i]) {
@@ -153,12 +155,14 @@ void Hangman::checkIfLetterWasUsed(string userGuess, int letterIsInWord) {
         if (letterIsInWord > 0) {
             if (letterIsInBank == true) {
                 decrementHearts();
-            } else {
+            }
+            else {
                 setUssedLetters(userGuess);
             }
 
-        } else { //litery nie ma w słowie
-            if (letterIsInBank  == false) {
+        }
+        else { //litery nie ma w słowie
+            if (letterIsInBank == false) {
                 setUssedLetters(userGuess);
             }
             decrementHearts();
@@ -190,19 +194,19 @@ void Hangman::showUsedLetters() {
 void Hangman::gameOver() {
     clearScreen();
     cout << "\n\t------------------------------------\n"
-         << "\t|            "<<dye::red("GAME OVER")<<"             |\n"
-         << "\t|        HASLEM BYLO SLOWO:        |\n"
-         << "\t             " << getSecretWord() << "\n"
-         << "\t------------------------------------\n";
+        << "\t|            " << dye::red("GAME OVER") << "             |\n"
+        << "\t|        HASLEM BYLO SLOWO:        |\n"
+        << "\t             " << getSecretWord() << "\n"
+        << "\t------------------------------------\n";
 }
 
 void Hangman::gameWon() {
     clearScreen();
     cout << "\n\t------------------------------------\n"
-         << "\t|             "<<dye::green("YOU WIN!") <<"             |\n"
-         << "\t|        HASLEM BYLO SLOWO:        |\n"
-         << "\t             " << getSecretWord() << "\n"
-         << "\t------------------------------------\n";
+        << "\t|             " << dye::green("YOU WIN!") << "             |\n"
+        << "\t|        HASLEM BYLO SLOWO:        |\n"
+        << "\t             " << getSecretWord() << "\n"
+        << "\t------------------------------------\n";
 }
 
 void Hangman::showMenu() {
@@ -210,7 +214,7 @@ void Hangman::showMenu() {
         << "\t|              WELCOME              |\n"
         << "\t|                 |                 |\n"
         << "\t|                 |                 |\n"
-        << "\t|           "<<dye::aqua("HANGMAN GAME")<<"            |\n"
+        << "\t|           " << dye::aqua("HANGMAN GAME") << "            |\n"
         << "\t|                                   |\n"
         << "\t|               MENU:               |\n"
         << "\t|          1.Rozpocznij gre         |\n"
@@ -223,34 +227,34 @@ void Hangman::showMenu() {
 void Hangman::showCredits() {
     clearScreen();
     cout << "\t------------------------------------\n"
-         << "\t|     PROGRAMOWANIE W JEZYKU C++    |\n"
-         << "\t|       Temat: Gra Wisielec         |\n"
-         << "\t|    Wyknoal: Grzegorz Szerszen     |\n"
-         << "\t|       nr indeksu: 171678          |\n"
-         << "\t------------------------------------\n";
+        << "\t|     PROGRAMOWANIE W JEZYKU C++    |\n"
+        << "\t|       Temat: Gra Wisielec         |\n"
+        << "\t|    Wyknoal: Grzegorz Szerszen     |\n"
+        << "\t|       nr indeksu: 171678          |\n"
+        << "\t------------------------------------\n";
 }
 
 void Hangman::showInstruction() {
     clearScreen();
     cout << "\t------------------------------------\n"
-         << "\t|          Instrukcja gry           |\n"
-         << "\t|  Gracz za zadanie ma odgadniecie  |\n"
-         << "\t|  ukrytego hasla. Po rozpoczenciu  |\n"
-         << "\t|  gry graczowi przyznawane jest 5  |\n"
-         << "\t|  zyc. Haslo moze odgadnac litere  |\n"
-         << "\t|  po literze albo wprowadzajac je  |\n"
-         << "\t|  w calosci. Blad w nastepujacych  |\n"
-         << "\t|  mozliwosciach skutkuje odjeciem  |\n"
-         << "\t|        zycia. Powodzenia!!!       |\n"
-         << "\t------------------------------------\n";
+        << "\t|          Instrukcja gry           |\n"
+        << "\t|  Gracz za zadanie ma odgadniecie  |\n"
+        << "\t|  ukrytego hasla. Po rozpoczenciu  |\n"
+        << "\t|  gry graczowi przyznawane jest 5  |\n"
+        << "\t|  zyc. Haslo moze odgadnac litere  |\n"
+        << "\t|  po literze albo wprowadzajac je  |\n"
+        << "\t|  w calosci. Blad w nastepujacych  |\n"
+        << "\t|  mozliwosciach skutkuje odjeciem  |\n"
+        << "\t|        zycia. Powodzenia!!!       |\n"
+        << "\t------------------------------------\n";
 }
 
 void Hangman::showDeveloperMode() {
-     cout << dye::aqua("\n\t------------------------------------\n")
-          << dye::aqua("\t|          DEVELOPER MODE          |\n")
-          << dye::aqua("\t|             HASLO TO:            |\n")
-          << "\t            "<< dye::aqua(getSecretWord()) << "\n"
-          << dye::aqua("\t------------------------------------\n");
+    cout << dye::aqua("\n\t------------------------------------\n")
+        << dye::aqua("\t|          DEVELOPER MODE          |\n")
+        << dye::aqua("\t|             HASLO TO:            |\n")
+        << "\t            " << dye::aqua(getSecretWord()) << "\n"
+        << dye::aqua("\t------------------------------------\n");
 }
 
 void Hangman::clearScreen() {
@@ -258,113 +262,113 @@ void Hangman::clearScreen() {
 }
 
 void Hangman::showHangman(int numberOfHearts) {
-	switch (numberOfHearts) {
-		case 0:
-            cout << "\t------------------------------------\n"
-                 << "\t|                                  |\n"
-                 << "\t|   |______________                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |            ( )               |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |          \\  |  /             |\n"
-                 << "\t|   |           \\ | /              |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |            / \\               |\n"
-                 << "\t|   |           /   \\              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t------------------------------------\n";
-            break;
-        case 1:
-            cout << "\t------------------------------------\n"
-                 << "\t|                                  |\n"
-                 << "\t|   |______________                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |            ( )               |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |          \\  |  /             |\n"
-                 << "\t|   |           \\ | /              |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |              \\               |\n"
-                 << "\t|   |               \\              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t------------------------------------\n";
-            break;
-        case 2:
-            cout << "\t___________________________________ \n"
-                 << "\t|                                  |\n"
-                 << "\t|   |______________                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |            ( )               |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |          \\  |  /             |\n"
-                 << "\t|   |           \\ | /              |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t------------------------------------\n";
-            break;
-        case 3:
-            cout << "\t------------------------------------\n"
-                 << "\t|                                  |\n"
-                 << "\t|   |______________                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |            ( )               |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |  /             |\n"
-                 << "\t|   |             | /              |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t------------------------------------\n";
-            break;
-        case 4:
-            cout << "\t------------------------------------\n"
-                 << "\t|                                  |\n"
-                 << "\t|   |______________                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |            ( )               |\n"
-                 << "\t|   |             |                |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t------------------------------------ \n";
-            break;
-        case 5:
-            cout << "\t------------------------------------\n"
-                 << "\t|                                  |\n"
-                 << "\t|   |______________                |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t|   |                              |\n"
-                 << "\t------------------------------------ \n";
-            break;
-	}
+    switch (numberOfHearts) {
+    case 0:
+        cout << "\t------------------------------------\n"
+            << "\t|                                  |\n"
+            << "\t|   |______________                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |            ( )               |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |          \\  |  /             |\n"
+            << "\t|   |           \\ | /              |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |            / \\               |\n"
+            << "\t|   |           /   \\              |\n"
+            << "\t|   |                              |\n"
+            << "\t------------------------------------\n";
+        break;
+    case 1:
+        cout << "\t------------------------------------\n"
+            << "\t|                                  |\n"
+            << "\t|   |______________                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |            ( )               |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |          \\  |  /             |\n"
+            << "\t|   |           \\ | /              |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |              \\               |\n"
+            << "\t|   |               \\              |\n"
+            << "\t|   |                              |\n"
+            << "\t------------------------------------\n";
+        break;
+    case 2:
+        cout << "\t___________________________________ \n"
+            << "\t|                                  |\n"
+            << "\t|   |______________                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |            ( )               |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |          \\  |  /             |\n"
+            << "\t|   |           \\ | /              |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t------------------------------------\n";
+        break;
+    case 3:
+        cout << "\t------------------------------------\n"
+            << "\t|                                  |\n"
+            << "\t|   |______________                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |            ( )               |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |  /             |\n"
+            << "\t|   |             | /              |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t------------------------------------\n";
+        break;
+    case 4:
+        cout << "\t------------------------------------\n"
+            << "\t|                                  |\n"
+            << "\t|   |______________                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |            ( )               |\n"
+            << "\t|   |             |                |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t------------------------------------ \n";
+        break;
+    case 5:
+        cout << "\t------------------------------------\n"
+            << "\t|                                  |\n"
+            << "\t|   |______________                |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t|   |                              |\n"
+            << "\t------------------------------------ \n";
+        break;
+    }
 };
